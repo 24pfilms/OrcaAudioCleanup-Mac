@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "booth"
-version = "0.2.1"
+version = "0.2.2"
 description = "Local Adobe Podcast-style speech enhancement: isolate the voice, clean it, remix with speech/background/music controls."
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
