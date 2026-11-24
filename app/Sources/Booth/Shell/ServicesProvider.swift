@@ -14,7 +14,7 @@ final class ServicesProvider: NSObject {
         let urls = FilePasteboard.fileURLs(on: pasteboard)
         Log.info("service: enhance \(urls.map(\.lastPathComponent).joined(separator: ", "))")
         guard !urls.isEmpty else {
-            error.pointee = "No files were passed to Booth."
+            error.pointee = "No files were passed to OrcaAudioCleanup."
             return
         }
         // AppKit delivers service requests on the main thread.

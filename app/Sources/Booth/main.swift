@@ -4,7 +4,7 @@ import BoothCore
 let options = LaunchOptions.parse(Array(CommandLine.arguments.dropFirst()))
 
 MainActor.assumeIsolated {
-    Log.info("Booth \(AppInfo.version) pid \(ProcessInfo.processInfo.processIdentifier): \(CommandLine.arguments.joined(separator: " "))")
+    Log.info("OrcaAudioCleanup \(AppInfo.version) pid \(ProcessInfo.processInfo.processIdentifier): \(CommandLine.arguments.joined(separator: " "))")
     for problem in options.problems { Log.error("launch arguments: \(problem)") }
 
     if options.isHeadless {

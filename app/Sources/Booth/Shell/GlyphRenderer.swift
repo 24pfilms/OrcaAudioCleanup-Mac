@@ -33,7 +33,7 @@ enum GlyphRenderer {
             return true
         }
         image.isTemplate = mode.isTemplate
-        image.accessibilityDescription = "Booth"
+        image.accessibilityDescription = "OrcaAudioCleanup"
         return image
     }
 

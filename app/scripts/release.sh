@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Builds everything a release publishes into dist/ at the repository root:
-#   Booth-<version>.dmg   the disk image, for GitHub Releases
-#   Booth.dmg             the same image under a stable name, for "latest" download links
+#   OrcaAudioCleanup-<version>.dmg   the disk image, for GitHub Releases
+#   OrcaAudioCleanup.dmg             the same image under a stable name, for "latest" download links
 #   booth.rb              the Homebrew cask (when packaging/release.env names the repository)
 #   SHA256SUMS
 # With --publish it then uploads them to the GitHub release v<version> and the cask to the Homebrew
@@ -138,9 +138,9 @@ mkdir -p "$dist"
 export BOOTH_BUILD_DIR=${BOOTH_BUILD_DIR:-$repo_dir/app/build/release}
 app=$("$script_dir/build-app.sh" "${build_args[@]}")
 dmg=$("$script_dir/make-dmg.sh" --app "$app" "${dmg_args[@]}")
-cp "$dmg" "$dist/Booth.dmg"
+cp "$dmg" "$dist/OrcaAudioCleanup.dmg"
 sha=$(shasum -a 256 "$dmg" | awk '{ print $1 }')
-(cd "$dist" && shasum -a 256 "$(basename "$dmg")" Booth.dmg >SHA256SUMS)
+(cd "$dist" && shasum -a 256 "$(basename "$dmg")" OrcaAudioCleanup.dmg >SHA256SUMS)
 
 # --- 4. Homebrew cask ------------------------------------------------------------------------------
 
@@ -162,10 +162,10 @@ if $publish; then
 	if ! gh release view "$tag" --repo "$BOOTH_REPOSITORY" >/dev/null 2>&1; then
 		log "Creating the release $tag"
 		gh release create "$tag" --repo "$BOOTH_REPOSITORY" --draft --target "$head" \
-			--title "Booth $version" --generate-notes >/dev/null
+			--title "OrcaAudioCleanup $version" --generate-notes >/dev/null
 	fi
 	log "Uploading to the release $tag"
-	gh release upload "$tag" "$dmg" "$dist/Booth.dmg" "$dist/SHA256SUMS" --repo "$BOOTH_REPOSITORY" --clobber
+	gh release upload "$tag" "$dmg" "$dist/OrcaAudioCleanup.dmg" "$dist/SHA256SUMS" --repo "$BOOTH_REPOSITORY" --clobber
 	gh release edit "$tag" --repo "$BOOTH_REPOSITORY" --draft=false >/dev/null
 	log "Published https://github.com/$BOOTH_REPOSITORY/releases/tag/$tag"
 

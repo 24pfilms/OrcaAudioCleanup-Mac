@@ -14,9 +14,9 @@ die() {
 	exit 1
 }
 
-signing_dir=${BOOTH_SIGNING_DIR:-$HOME/Library/Application Support/Booth Signing}
+signing_dir=${BOOTH_SIGNING_DIR:-$HOME/Library/Application Support/OrcaAudioCleanup Signing}
 keychain=$signing_dir/signing.keychain-db
-identity="Booth Local Signing"
+identity="OrcaAudioCleanup Local Signing"
 
 if [[ -f $keychain ]]; then
 	log "The signing identity already exists in $keychain"

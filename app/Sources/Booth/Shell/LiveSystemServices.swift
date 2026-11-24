@@ -57,7 +57,7 @@ final class GitHubUpdates: UpdateChecking {
     func latestRelease() async throws -> Release {
         var request = URLRequest(url: UpdateCheck.latestRelease, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 15)
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
-        request.setValue("Booth/\(AppInfo.version)", forHTTPHeaderField: "User-Agent")
+        request.setValue("OrcaAudioCleanup/\(AppInfo.version)", forHTTPHeaderField: "User-Agent")
         let (data, response) = try await URLSession.shared.data(for: request)
         let status = (response as? HTTPURLResponse)?.statusCode ?? 0
         guard status == 200, let release = Release(gitHubJSON: data) else { throw BadAnswer(status: status) }

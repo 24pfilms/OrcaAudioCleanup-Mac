@@ -1,106 +1,67 @@
-# Booth
+# OrcaAudioCleanup for Mac
 
-**Studio-quality voice for your recordings, enhanced on your Mac.**
+**Clean up the voice in your videos, on your own Mac.**
 
-[Website](https://getbooth.xyz) · [Download for Mac](https://github.com/shrimbly/booth/releases/latest/download/Booth.dmg) · `brew install shrimbly/booth/booth`
+[squarecirclelabs.com](https://squarecirclelabs.com) · [Download for Mac](https://github.com/24pfilms/OrcaAudioCleanup-Mac/releases/latest/download/OrcaAudioCleanup.dmg)
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/booth-dark.png">
-  <img src="docs/images/booth-light.png" width="320" alt="Booth's popover after enhancing interview-take3.mp4: a player with its waveform, Hold ⌥ to compare, and the Speech, Background and Music levels">
-</picture>
+OrcaAudioCleanup cleans up the voice in any video or audio file: wind, echo, traffic, a noisy room.
+It lives in the menu bar: drop a recording on it and `<name>-enhanced` appears beside the original,
+with the voice restored, the background turned down, and the picture left as it was. Everything runs
+on your Mac. There is no account, no upload and no length limit. Your original file is never changed.
 
-Booth cleans up the voice in any video or audio file. It lives in the menu bar: drop a recording on
-it and `<name>-enhanced` appears beside the original, with the voice restored, the room and the
-noise turned down, and the picture left as it was. It is the same kind of model as Adobe Podcast's
-Enhance Speech, and it runs entirely on your Mac. There is no account, no upload and no length limit.
+There is also a Windows version: see [squarecirclelabs.com](https://squarecirclelabs.com).
 
-Under the app is the `booth` command, which you can use on its own:
-
-```console
-$ booth interview.mp4 podcast.wav
-✓ interview.mp4 → interview-enhanced.mp4 (1m 48s)
-✓ podcast.wav → podcast-enhanced.wav (52s)
-```
-
-- [Install](#install): the disk image, Homebrew, or the command line on its own
-- [Use Booth](#use-booth)
-- [Use the command line](#use-the-command-line)
-- [How it works](#how-it-works)
-- [Build and release](#build-and-release)
+OrcaAudioCleanup for Mac is [Booth](https://github.com/shrimbly/booth) by shrimbly (MIT licence),
+renamed. All the credit for the app and its engine goes to Booth.
 
 ## Requirements
 
-- macOS 14 (Sonoma) or later on Apple silicon, with 16 GB of memory or more. Enhancing a recording
-  takes about 5 GB at its peak: 4.8 GB for 2.5 minutes, 5.6 GB for 10 minutes.
-- About 2 GB of disk space for the voice models and the engine, downloaded on first use.
-- [ffmpeg](https://ffmpeg.org), to read and write audio and video. Booth uses yours if you have
-  one, and otherwise downloads its own during setup (57 MB).
+- macOS 14 (Sonoma) or later on an Apple silicon Mac (M1 or newer), with 16 GB of memory or more.
+  Intel Macs are not supported.
+- About 2 GB of disk space for the voice models and the engine, downloaded the first time.
+- [ffmpeg](https://ffmpeg.org), to read and write audio and video. OrcaAudioCleanup uses yours if
+  you have one, and otherwise downloads its own during setup (57 MB).
 
 ## Install
 
-### Download
+1. Download `OrcaAudioCleanup.dmg` from the
+   [latest release](https://github.com/24pfilms/OrcaAudioCleanup-Mac/releases/latest).
+2. Open it and drag OrcaAudioCleanup into Applications.
+3. **The first time only:** the app is not signed by Apple, so macOS says it "can't be opened" or
+   "cannot verify the developer". Click **Done** (not Move to Trash), then open
+   **System Settings › Privacy & Security**, scroll down and click **Open Anyway** next to
+   OrcaAudioCleanup. After that it opens normally.
 
-Download `Booth.dmg` from the [website](https://getbooth.xyz) (or the
-[latest release](https://github.com/shrimbly/booth/releases/latest)), open it, and drag Booth to
-Applications. Then open Booth from Applications. It lives in the menu bar, not in the Dock.
+   If you're comfortable with Terminal, this does the same thing:
 
-The first time, Booth sets up its engine and downloads the voice models: about 1.1 GB, once. If
-you don't have ffmpeg, it downloads that too.
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/OrcaAudioCleanup.app
+   ```
 
-To use `booth` in Terminal as well, link the copy inside Booth onto your `PATH`:
+4. OrcaAudioCleanup appears in the menu bar, not in the Dock. The first time, it sets up its engine
+   and downloads the voice models: about 1.1 GB, once.
 
-```bash
-ln -s /Applications/Booth.app/Contents/Resources/bin/booth /usr/local/bin/booth
-```
-
-### Homebrew
-
-```bash
-brew install shrimbly/booth/booth
-```
-
-This installs Booth from its [tap](https://github.com/shrimbly/homebrew-booth), puts `booth` on
-your `PATH`, and installs ffmpeg. `brew upgrade` keeps both up to date, and
-`brew uninstall --cask --zap booth` also removes the models and settings.
-
-### Command line only
-
-Without the app, install the `booth` command with [uv](https://docs.astral.sh/uv/):
+To use the `booth` command in Terminal as well, link the copy inside the app onto your `PATH`:
 
 ```bash
-brew install uv
-uv tool install --python 3.11 git+https://github.com/shrimbly/booth   # or `.` from a checkout
-booth setup                                                           # optional: download the models now
+ln -s /Applications/OrcaAudioCleanup.app/Contents/Resources/bin/booth /usr/local/bin/booth
 ```
 
-The engine needs Python 3.11 or 3.12; `--python 3.11` makes uv fetch one if you don't have it.
+## Use OrcaAudioCleanup
 
-### From source
-
-```bash
-git clone https://github.com/shrimbly/booth && cd booth
-uv sync --python 3.11                       # the engine, in .venv
-app/scripts/build-app.sh --open             # Booth.app, using this checkout's engine
-```
-
-Building Booth needs the Command Line Tools for Xcode (`xcode-select --install`), not Xcode itself.
-See [app/README.md](app/README.md) for the details.
-
-## Use Booth
-
-Give Booth a recording in whichever way is handy:
+Give it a recording in whichever way is handy:
 
 - Drop the file on the menu bar icon, or into the open popover.
 - Select files in Finder and press **⌃⌥E**.
-- Right-click files in Finder and choose **Quick Actions › Enhance with Booth**.
-- Choose **Open With › Booth**.
+- Right-click files in Finder and choose **Quick Actions › Clean up with OrcaAudioCleanup**.
+- Choose **Open With › OrcaAudioCleanup**.
 
-Booth works through files one at a time and writes `<name>-enhanced` next to each. When one is
-done, play it in the popover and hold **⌥** to hear the original. **Mix** sets how much speech,
-background and music to keep. You hear each change as you make it, and saving a new mix takes
-seconds, because the voice models don't run again.
+It works through files one at a time and writes `<name>-enhanced` next to each. When one is done,
+play it in the popover and hold **⌥** to hear the original. **Mix** sets how much speech, background
+and music to keep. You hear each change as you make it, and saving a new mix takes seconds, because
+the voice models don't run again.
 
-[app/README.md](app/README.md) covers settings, logs and troubleshooting.
+It rebuilds your voice rather than filtering it, so always listen before you post.
 
 ## Use the command line
 
@@ -187,121 +148,41 @@ Measured against Adobe Podcast Enhance v2 on four real recordings:
 | | DNSMOS OVR | UTMOS | Spectral distance to Adobe |
 |---|---|---|---|
 | Original | 2.46 | 2.05 | 9.6 dB |
-| **Booth (Sidon)** | **3.37** | **3.56** | **6.2 dB** |
+| **OrcaAudioCleanup (Sidon)** | **3.37** | **3.56** | **6.2 dB** |
 | Adobe Podcast | 3.35 | 3.60 | — |
 
 [docs/how-it-works.md](docs/how-it-works.md) has the full pipeline, the post-processing and why
 each step is there, the calibration of the other engines, and the benchmark.
-[docs/app-protocol.md](docs/app-protocol.md) describes how Booth drives the engine.
+[docs/app-protocol.md](docs/app-protocol.md) describes how the app drives the engine.
 
-## Build and release
-
-| Script | What it does |
-|---|---|
-| `app/scripts/build-app.sh` | Builds `app/build/Booth.app`. Add `--dist` for a build meant for other Macs, `--sign IDENTITY` to sign with a Developer ID. |
-| `app/scripts/make-dmg.sh` | Packages a built app as `Booth-<version>.dmg`, in the window `packaging/dmg` lays out (dmgbuild, run through uv); `--sign` and `--notarize` sign and notarize the image. |
-| `app/scripts/release.sh` | Runs the tests, then builds, signs, notarizes and packages a release into `dist/`. `--publish` uploads it to GitHub and updates the Homebrew tap. |
-| `app/scripts/set-release-secrets.sh` | Puts the signing certificate, the notary key and the tap's deploy key into the secrets the release workflow uses. |
-| `site/tools/make-demo-reel.py` | Cuts the website's demo reels (the picture, both sound tracks and the timeline's marks) from recordings Booth has enhanced. |
-| `site/tools/make-demo-video.sh` | Renders the website's demo video from Booth's real popover views. |
-
-The version comes from `pyproject.toml` (with `__version__` in `src/booth/__init__.py` to
-match); the build stamps it into Booth's `Info.plist`.
-
-### Make a release
-
-1. Set `version` in `pyproject.toml` and `__version__` in `src/booth/__init__.py`, and commit.
-2. Tag the commit `v<version>` and push both:
-
-   ```bash
-   git tag v0.2.0 && git push origin main v0.2.0
-   ```
-
-The tag starts the **Release** workflow (`.github/workflows/release.yml`). On a GitHub Apple
-silicon runner it runs the tests, builds Booth, signs it with the Developer ID, and notarizes and
-staples the disk image. Then it uploads `Booth-<version>.dmg`, `Booth.dmg` and `SHA256SUMS` to the
-GitHub release `v<version>`, and commits the new cask to
-[shrimbly/homebrew-booth](https://github.com/shrimbly/homebrew-booth). `Booth.dmg` is the same
-image under a name that doesn't change, for the website's download link. To try the workflow
-without releasing anything, run it from the Actions tab: it builds, signs and notarizes, and keeps
-the image as a workflow artifact.
-
-The same release can be made on your Mac, if the workflow can't run:
+## Build
 
 ```bash
-app/scripts/release.sh --sign "Developer ID Application" --notarize booth --publish
+git clone https://github.com/24pfilms/OrcaAudioCleanup-Mac && cd OrcaAudioCleanup-Mac
+uv sync --python 3.11                       # the engine, in .venv
+app/scripts/build-app.sh --open             # OrcaAudioCleanup.app, using this checkout's engine
+swift test --package-path app               # the app's tests
 ```
 
-`--publish` needs a clean checkout whose commit is on GitHub. It creates the release and its tag at
-that commit if they don't exist yet, publishes the release once the images are up, and then
-updates the tap. The workflow that the new tag starts sees the release is already published and
-stops there. `booth` is a notarytool profile, saved once with an
-[App Store Connect API key](https://appstoreconnect.apple.com/access/integrations/api):
+Building needs the Command Line Tools for Xcode (`xcode-select --install`), not Xcode itself.
+[app/README.md](app/README.md) has the details (it still uses Booth's names for the code).
 
-```bash
-xcrun notarytool store-credentials booth --key AuthKey_<KEY ID>.p8 --key-id <KEY ID> --issuer <ISSUER ID>
-```
+Releases are built by GitHub: push a tag `v<version>` matching `pyproject.toml` and
+[.github/workflows/release.yml](.github/workflows/release.yml) runs the tests, builds the app and
+the disk image, and uploads `OrcaAudioCleanup-<version>.dmg`, `OrcaAudioCleanup.dmg` and
+`SHA256SUMS` to the release. Running the workflow by hand builds and tests without publishing.
+Releases are not signed or notarized by Apple (see Install, step 3).
 
-Without `--sign`, `release.sh` makes an unsigned test image that Gatekeeper blocks on other Macs.
+The app icon is `app/Resources/OrcaAudioCleanup.icns`; `python packaging/icon/make_icns.py` redraws it.
 
-### Signing
+## Credits and licence
 
-Booth is signed with the hardened runtime. `--dist` builds don't point at this checkout's engine,
-and they carry no file paths from the Mac that built them. On first run they install their own in
-`~/Library/Application Support/Booth/engine` with the bundled `uv`, and they update it the first
-time a newer Booth starts.
+OrcaAudioCleanup for Mac is [Booth](https://github.com/shrimbly/booth) by shrimbly, renamed, used
+under the MIT licence. Booth's licence is kept unchanged in [LICENSE](LICENSE).
 
-The workflow signs and notarizes with six repository secrets. `set-release-secrets.sh` checks each
-one and sets it:
-
-```bash
-app/scripts/set-release-secrets.sh --identity "Developer ID Application" \
-  --api-key AuthKey_<KEY ID>.p8 --issuer <ISSUER ID> --tap-key
-```
-
-`--identity` exports the certificate and its private key from your keychain as a `.p12` with a new
-random password; macOS asks for your login password first. `--api-key` is the key notarization
-uses. `--tap-key` makes the SSH key that lets the workflow push to the tap, and adds it to the tap
-as a deploy key. Each works on its own, so after renewing the certificate, run just `--identity`.
-
-### Website
-
-`site/` is a single static page: one sentence whose ▶ opens a 49-second walkthrough of Booth,
-recorded in a noisy room (the picture over the original's and Booth's waveforms; hold ⌥ to hear
-the original, and each breath, click or background noise Booth removed is marked as it passes),
-and a short video of Booth at work behind "menu bar". To try it, serve the folder with a server
-that answers range requests, which the reel's video needs to seek (`npx http-server site`, say).
-Vercel deploys it to [getbooth.xyz](https://getbooth.xyz) from every push to `main` (the project's
-root directory is `site/`; `site/.vercelignore` keeps `tools/` off the web). The download button
-links to `Booth.dmg` on the latest GitHub release. Vercel Web Analytics counts page views (without
-cookies): it's switched on in the project's settings, and its script,
-`/_vercel/insights/script.js`, only exists on Vercel's deployments. The link-preview card,
-`site/assets/og.png`, is `site/tools/og-card.html` rendered by Chrome; the command is at the top
-of that file. The walkthrough is a reel, built from the author's own recordings, which stay out of
-the repository; `site/tools/make-demo-reel.py` lists each reel's sections. `walkthrough` is the
-one the page opens with; `reel`, sections of three screen recordings, plays from its "More demos"
-button. Enhance each recording keeping the stems, survey it for sections where Booth fixed several
-things, and build:
-
-```bash
-.venv/bin/booth enhance talk.mp4 --audio-only --keep-stems runs/talk-stems -o runs/talk-booth.wav
-.venv/bin/python site/tools/make-demo-reel.py survey runs talk talk.mp4
-.venv/bin/python site/tools/make-demo-reel.py build runs walkthrough
-```
-
-The video is drawn by Booth itself, from its real popover views, so re-render it after the UI
-changes. Build the app first (`swift build` in `app/`); `DEMO_POSTER` is a still from the video
-being dragged, which the file's thumbnail and the Done screen show:
-
-```bash
-DEMO_POSTER=still.jpg site/tools/make-demo-video.sh
-```
-
-## License
-
-MIT; see [LICENSE](LICENSE). Booth.app also carries uv (MIT or Apache 2.0), the Geist Serif
-typeface (SIL Open Font License), Silero VAD's speech detector (MIT) and DeepFilterNet3 (MIT or
-Apache 2.0). The engine downloads these models under their own licenses: Sidon and w2v-BERT 2.0
-(MIT), Demucs (MIT) and ClearVoice MossFormer2 (Apache 2.0), and on a Mac without ffmpeg, a build
-of FFmpeg (GPL 3.0). [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) has the details, and the
-app has a copy of it and of `LICENSE` in `Contents/Resources`.
+The app also carries uv (MIT or Apache 2.0), the Geist Serif typeface (SIL Open Font License),
+Silero VAD's speech detector (MIT) and DeepFilterNet3 (MIT or Apache 2.0). The engine downloads these
+models under their own licences: Sidon and w2v-BERT 2.0 (MIT), Demucs (MIT) and ClearVoice
+MossFormer2 (Apache 2.0), and on a Mac without ffmpeg, a build of FFmpeg (GPL 3.0).
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) has the details, and the app has a copy of it and
+of `LICENSE` in `Contents/Resources`.

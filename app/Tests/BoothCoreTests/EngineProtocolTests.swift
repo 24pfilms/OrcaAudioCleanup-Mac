@@ -157,13 +157,13 @@ struct LineBufferTests {
 struct RunOptionsTests {
     let input = URL(fileURLWithPath: "/Users/me/Movies/in take.mp4")
     let output = URL(fileURLWithPath: "/Users/me/Movies/in take-enhanced.mp4")
-    let stems = URL(fileURLWithPath: "/Users/me/Library/Caches/Booth/jobs/ABC", isDirectory: true)
+    let stems = URL(fileURLWithPath: "/Users/me/Library/Caches/OrcaAudioCleanup/jobs/ABC", isDirectory: true)
 
     @Test func defaultArguments() {
         let options = RunOptions(output: output, stemsDirectory: stems)
         #expect(options.arguments(input: input) == [
             "enhance", "/Users/me/Movies/in take.mp4", "--events",
-            "--stems-dir", "/Users/me/Library/Caches/Booth/jobs/ABC",
+            "--stems-dir", "/Users/me/Library/Caches/OrcaAudioCleanup/jobs/ABC",
             "-o", "/Users/me/Movies/in take-enhanced.mp4",
             "--engine", "sidon",
             "-s", "54", "-b", "10", "-m", "10",

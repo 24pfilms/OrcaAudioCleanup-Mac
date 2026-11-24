@@ -57,7 +57,7 @@ struct SignatureRevealTests {
 
     @Test func settlesToRest() {
         let end = SignatureReveal.seconds
-        #expect(abs(end - 0.71) < 1e-9)
+        #expect(abs(end - 0.68) < 1e-9)
         #expect(SignatureReveal.letters(at: end, reduceMotion: false).allSatisfy { $0 == .rest })
         #expect(SignatureReveal.hazeOpacity(at: end) == 0)
     }
@@ -70,9 +70,9 @@ struct SignatureRevealTests {
             #expect(earlier.extraBlur < later.extraBlur)
             #expect(earlier.drop < later.drop)
         }
-        // B has started by 60 ms; h hasn't until 160 ms.
+        // O has started by 60 ms; a hasn't until 130 ms.
         #expect(SignatureReveal.letters(at: 0.06, reduceMotion: false)[0].alpha > 0)
-        #expect(SignatureReveal.letters(at: 0.159, reduceMotion: false)[4].alpha == 0)
+        #expect(SignatureReveal.letters(at: 0.129, reduceMotion: false)[3].alpha == 0)
     }
 
     @Test func eachLetterOnlyEverComesCloser() {

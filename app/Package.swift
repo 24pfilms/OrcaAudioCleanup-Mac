@@ -5,7 +5,7 @@ let package = Package(
     name: "Booth",
     platforms: [.macOS(.v14)],
     products: [
-        .executable(name: "Booth", targets: ["Booth"]),
+        .executable(name: "OrcaAudioCleanup", targets: ["Booth"]),
         .library(name: "BoothCore", targets: ["BoothCore"]),
     ],
     targets: [

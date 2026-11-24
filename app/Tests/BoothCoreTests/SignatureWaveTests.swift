@@ -9,8 +9,8 @@ struct SignatureWaveTests {
         SignatureWave.styles(milliseconds: t, progress: progress, screen: screen, dropHover: drop, reduceMotion: reduce)
     }
 
-    @Test func spellsBooth() {
-        #expect(String(styles(0).map(\.character)) == "Booth")
+    @Test func spellsOrca() {
+        #expect(String(styles(0).map(\.character)) == "Orca")
     }
 
     @Test func restingIsSoftFocus() {
@@ -37,7 +37,7 @@ struct SignatureWaveTests {
     @Test func workingWaveAt1300msMatchesTheMockup() {
         let letters = styles(1300, progress: 0.48)
         let expected: [(blur: Double, alpha: Double)] = [
-            (0.000057, 0.639987), (0.295315, 0.573637), (0.86082, 0.446557), (1.068, 0.4), (1.068, 0.4),
+            (0.000057, 0.639987), (0.486334, 0.530712), (1.060819, 0.401614), (1.068, 0.4),
         ]
         for (letter, reference) in zip(letters, expected) {
             #expect(abs(letter.blur - reference.blur) < 1e-5)

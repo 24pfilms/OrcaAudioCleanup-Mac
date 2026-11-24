@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Packages a built Booth.app as a drag-to-install disk image: Booth.app beside a link to
+# Packages a built OrcaAudioCleanup.app as a drag-to-install disk image: OrcaAudioCleanup.app beside a link to
 # /Applications, in the window packaging/dmg lays out. With --sign it signs the image; with --notarize it also sends the image to Apple's
 # notary service and staples the ticket, which needs a Developer ID build (build-app.sh --dist
 # --sign "Developer ID Application: …") and a notarytool keychain profile.
@@ -11,7 +11,7 @@ usage() {
 	cat <<'EOF'
 usage: make-dmg.sh [--app PATH] [--out DIR] [--sign IDENTITY] [--notarize PROFILE]
 
-  --app PATH          the Booth.app to package     default: app/build/Booth.app
+  --app PATH          the app to package           default: app/build/OrcaAudioCleanup.app
   --out DIR           where the image goes          default: app/build
   --sign IDENTITY     sign the image (a Developer ID Application identity)
   --notarize PROFILE  notarize and staple the image, with credentials saved once by
@@ -21,7 +21,7 @@ usage: make-dmg.sh [--app PATH] [--out DIR] [--sign IDENTITY] [--notarize PROFIL
 environment:
   BOOTH_NOTARY_KEYCHAIN  the keychain that holds PROFILE    default: the login keychain
 
-The image is named Booth-<version>.dmg, from the app's CFBundleShortVersionString.
+The image is named OrcaAudioCleanup-<version>.dmg, from the app's CFBundleShortVersionString.
 EOF
 }
 
@@ -34,7 +34,7 @@ die() {
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 layout=$script_dir/../../packaging/dmg
 dmgbuild_version=1.6.7
-app=$script_dir/../build/Booth.app
+app=$script_dir/../build/OrcaAudioCleanup.app
 out_dir=$script_dir/../build
 sign_identity=
 notary_profile=
@@ -77,7 +77,7 @@ if [[ -n $notary_profile ]]; then
 fi
 
 version=$(plutil -extract CFBundleShortVersionString raw -o - "$app/Contents/Info.plist")
-dmg=$out_dir/Booth-$version.dmg
+dmg=$out_dir/OrcaAudioCleanup-$version.dmg
 
 staging=$(mktemp -d "${TMPDIR:-/tmp}/booth-dmg.XXXXXX")
 trap 'rm -rf "$staging"' EXIT
@@ -87,7 +87,7 @@ rm -f "$dmg"
 # dmgbuild writes the window's layout itself rather than driving the Finder, so CI can make it too.
 command -v uv >/dev/null || die "needs uv to run dmgbuild: https://docs.astral.sh/uv/"
 uv tool run --quiet --from "dmgbuild==$dmgbuild_version" dmgbuild -s "$layout/settings.py" \
-	-D app="$app" -D background="$layout/background.tiff" Booth "$dmg" >&2
+	-D app="$app" -D background="$layout/background.tiff" OrcaAudioCleanup "$dmg" >&2
 
 if [[ -n $sign_identity ]]; then
 	log "Signing the image as $sign_identity"

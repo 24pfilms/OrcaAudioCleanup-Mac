@@ -110,7 +110,7 @@ final class FakeJobRunner: JobRunner {
     /// The real engine's `decode_failed` sentence (protocol.py `_unreadable`), so the demo's
     /// Error screen reads like the real one.
     static func unreadableMessage(name: String) -> String {
-        "\(name) may be damaged or in a format Booth doesn't support. Nothing was changed."
+        "\(name) may be damaged or in a format OrcaAudioCleanup doesn't support. Nothing was changed."
     }
 
     /// Wall-clock seconds the demo spends on a file: 6–11, stable per name.

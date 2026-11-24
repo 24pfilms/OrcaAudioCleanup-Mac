@@ -159,7 +159,7 @@ final class PopoverPanelController {
         panel.isMovable = false
         panel.worksWhenModal = true
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .transient, .ignoresCycle]
-        panel.setAccessibilityLabel("Booth")
+        panel.setAccessibilityLabel("OrcaAudioCleanup")
 
         // The content hangs from the top of the window, under the headroom, and nothing slides
         // while the window grows or shrinks. The window's size comes from the content's

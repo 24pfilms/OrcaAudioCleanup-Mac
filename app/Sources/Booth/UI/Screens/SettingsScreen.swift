@@ -74,7 +74,7 @@ private struct UpdateAccessory: View {
         case .available(let release):
             Button("Download \(release.version)", action: model.downloadUpdate)
                 .buttonStyle(TextActionButtonStyle(tone: .primary, weight: .semibold))
-                .accessibilityLabel("Download Booth \(release.version)")
+                .accessibilityLabel("Download OrcaAudioCleanup \(release.version)")
         case .failed:
             HStack(spacing: 8) {
                 note("Couldn't check")
@@ -104,7 +104,7 @@ struct SettingsFooter: View {
                 .foregroundStyle(theme.text2)
                 .accessibilityLabel("Version \(model.version)")
             Spacer(minLength: 0)
-            Button("Quit Booth", action: model.quit)
+            Button("Quit OrcaAudioCleanup", action: model.quit)
                 .buttonStyle(TextActionButtonStyle(tone: .primary))
         }
         .font(TextStyle.secondary.font)

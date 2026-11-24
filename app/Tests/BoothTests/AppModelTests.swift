@@ -147,8 +147,8 @@ struct AppModelTests {
         #expect(h.model.isOpen)
         #expect(h.model.effectiveScreen == .error)
         #expect(h.model.error?.code == .decodeFailed)
-        #expect(h.model.errorTitle == "Booth couldn't read these files")
-        #expect(h.model.errorBody == "a.pdf and 1 more aren't audio or video files Booth can read. Nothing was changed.")
+        #expect(h.model.errorTitle == "OrcaAudioCleanup couldn't read these files")
+        #expect(h.model.errorBody == "a.pdf and 1 more aren't audio or video files OrcaAudioCleanup can read. Nothing was changed.")
         #expect(h.model.errorFileName == "a.pdf")
 
         // A file Booth takes clears it.
@@ -160,8 +160,8 @@ struct AppModelTests {
     @Test func oneUnsupportedFileIsNamed() async {
         let h = await Harness.ready()
         h.model.enqueue([h.file("clip.xyz")])
-        #expect(h.model.errorTitle == "Booth couldn't read this file")
-        #expect(h.model.errorBody == "clip.xyz isn't an audio or video file Booth can read. Nothing was changed.")
+        #expect(h.model.errorTitle == "OrcaAudioCleanup couldn't read this file")
+        #expect(h.model.errorBody == "clip.xyz isn't an audio or video file OrcaAudioCleanup can read. Nothing was changed.")
     }
 
     @Test func mixedInputQueuesTheSupportedFilesWithoutAnError() async {
@@ -1118,7 +1118,7 @@ struct AppModelTests {
         #expect(AppModel.fixture(.firstrun).setupBytesText == "412 MB of 1.13 GB")
         let waiting = AppModel.fixture(.firstrunWaiting)
         #expect(AppModel.Fixture.firstrunWaiting.rawValue == "firstrun-waiting")
-        #expect(waiting.setupWaitingText == "Booth's engine in ~/Documents/projects/booth is taking a while to start. If macOS is asking whether Booth may access that folder, choose Allow.")
+        #expect(waiting.setupWaitingText == "OrcaAudioCleanup's engine in ~/Documents/projects/booth is taking a while to start. If macOS is asking whether OrcaAudioCleanup may access that folder, choose Allow.")
         #expect(waiting.setupFailureMessage == nil && waiting.setupBytesText == nil)
         #expect(AppModel.fixture(.idleDropHover).dropHover)
     }
@@ -1233,7 +1233,7 @@ struct FakeJobRunnerTests {
         #expect(try await run("b-roll-silent.mov").last == .error(.noAudio(fileName: "b-roll-silent.mov")))
         if case .error(let error) = try await run("corrupt.wav").last {
             #expect(error.code == .decodeFailed)
-            #expect(error.message == "corrupt.wav may be damaged or in a format Booth doesn't support. Nothing was changed.")
+            #expect(error.message == "corrupt.wav may be damaged or in a format OrcaAudioCleanup doesn't support. Nothing was changed.")
             #expect(Formatting.errorBody(for: error) == error.message)
         } else {
             Issue.record("expected decode_failed")
@@ -1267,7 +1267,7 @@ struct FakeJobRunnerTests {
 @Suite("Update check")
 @MainActor
 struct UpdateCheckModelTests {
-    static let newer = Release(version: "99.0.0", download: URL(string: "https://example.com/Booth.dmg")!)
+    static let newer = Release(version: "99.0.0", download: URL(string: "https://example.com/OrcaAudioCleanup.dmg")!)
 
     @Test func aNewerReleaseIsOfferedAndDownloadOpensItsImage() async {
         let updates = FixedUpdates(.success(Self.newer))

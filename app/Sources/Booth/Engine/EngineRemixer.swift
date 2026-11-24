@@ -26,7 +26,7 @@ final class EngineRemixer: Remixing {
             throw JobError(code: .internal, message: "This file's stems are gone, so its mix can't change. Enhance it again to remix it.")
         }
         guard let executable = locator.installation?.executable else {
-            throw JobError(code: .setupRequired, message: "Booth's engine isn't set up yet.")
+            throw JobError(code: .setupRequired, message: "OrcaAudioCleanup's engine isn't set up yet.")
         }
         let arguments = [
             "remix", stems.path,
@@ -44,7 +44,7 @@ final class EngineRemixer: Remixing {
         do {
             outcome = try await process.runToCompletion()
         } catch {
-            throw JobError(code: .engineFailed, message: "Booth couldn't start its engine: \(error.localizedDescription)")
+            throw JobError(code: .engineFailed, message: "OrcaAudioCleanup couldn't start its engine: \(error.localizedDescription)")
         }
         for event in outcome.events.reversed() {
             switch event {

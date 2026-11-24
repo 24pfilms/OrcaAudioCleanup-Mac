@@ -19,7 +19,7 @@ struct FirstRunScreen: View {
                 Paragraph(waiting).padding(.top, 3)
             } else {
                 ScreenTitle("Setting up")
-                Paragraph("Booth downloads its voice models once. After that, everything runs on this Mac and nothing is uploaded.")
+                Paragraph("OrcaAudioCleanup downloads its voice models once. After that, everything runs on this Mac and nothing is uploaded.")
                     .padding(.top, 3)
                 ProgressBar(fraction: model.setup.fraction, accessibilityLabel: "Setup progress")
                     .padding(.top, 12)

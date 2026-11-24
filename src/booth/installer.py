@@ -65,7 +65,7 @@ try:
     for name, digest in {FFMPEG_SHA256!r}.items():
         archive = os.path.join(part, name + ".zip")
         request = urllib.request.Request({FFMPEG_BUILD!r} + "/" + name + ".zip",
-                                         headers={{"User-Agent": "Booth/{__version__}"}})
+                                         headers={{"User-Agent": "OrcaAudioCleanup/{__version__}"}})
         with urllib.request.urlopen(request, timeout=60) as r, open(archive, "wb") as f:
             shutil.copyfileobj(r, f, 1 << 20)
         with open(archive, "rb") as f:
@@ -312,5 +312,5 @@ def _status(done: int, total: int, rate: float | None) -> dict:
 def _failure_message(task: Task) -> str:
     last = next((line.strip() for line in reversed(task.tail) if line.strip()), "")
     what = "ffmpeg" if task.label == "ffmpeg" else f"the {task.label}"
-    msg = f"Booth couldn't download {what}. Check your internet connection."
+    msg = f"OrcaAudioCleanup couldn't download {what}. Check your internet connection."
     return f"{msg} ({last[:160]})" if last else msg

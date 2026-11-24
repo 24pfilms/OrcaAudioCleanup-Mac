@@ -14,7 +14,7 @@ final class LoginItem: LoginItemControlling {
         do {
             if enabled {
                 guard Self.isInstalled else {
-                    Log.info("open at login: not registering \(Bundle.main.bundlePath); install Booth in /Applications or ~/Applications")
+                    Log.info("open at login: not registering \(Bundle.main.bundlePath); install OrcaAudioCleanup in /Applications or ~/Applications")
                     return
                 }
                 switch service.status {

@@ -30,7 +30,7 @@ public enum EngineSearch {
 
     /// `~/Library/Application Support/Booth/engine`: the engine first-run setup installs.
     public static func managedEngineDirectory(home: URL) -> URL {
-        home.appendingPathComponent("Library/Application Support/Booth/engine", isDirectory: true)
+        home.appendingPathComponent("Library/Application Support/OrcaAudioCleanup/engine", isDirectory: true)
     }
 
     /// The managed install's virtual environment, created by `uv sync`.

@@ -208,7 +208,7 @@ struct ManagedEngineUpdateTests {
     }
 }
 
-@Suite("Engine search skips Booth's own command", .serialized)
+@Suite("Engine search skips OrcaAudioCleanup's own command", .serialized)
 @MainActor
 struct OwnCommandTests {
     /// `<scratch>/Booth.app/Contents/Resources/bin/booth`, linked from `<scratch>/bin` the
@@ -222,7 +222,7 @@ struct OwnCommandTests {
 
         init() throws {
             root = FileManager.default.temporaryDirectory.appendingPathComponent("booth-own-\(UUID().uuidString)", isDirectory: true)
-            app = root.appendingPathComponent("Booth.app", isDirectory: true)
+            app = root.appendingPathComponent("OrcaAudioCleanup.app", isDirectory: true)
             command = app.appendingPathComponent("Contents/Resources/bin/booth")
             link = root.appendingPathComponent("bin/booth")
             try ScriptEngine.install(ScriptEngine.script(), at: command)

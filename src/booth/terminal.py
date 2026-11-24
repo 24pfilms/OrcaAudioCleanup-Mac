@@ -112,7 +112,7 @@ def remix_dir(args: Namespace) -> int:
         return 1
     except Exception:                       # not JSON, another protocol, missing fields
         err.print(f"[red]error:[/] {shown_dir} isn't a stems folder from this version of "
-                  "Booth. Enhance the file again with --stems-dir.")
+                  "OrcaAudioCleanup. Enhance the file again with --stems-dir.")
         return 1
     tracker = plan_remix(duration=duration, video=video, speeds=SpeedBook())
     try:
@@ -343,7 +343,7 @@ def _download(err: Console, installer, only: set[str] | None, quiet: bool) -> No
         try:
             installer.run(emit, only)
         except installer.SetupError as e:
-            raise Problem(e.message.replace("Booth couldn't", "Couldn't")) from None
+            raise Problem(e.message.replace("OrcaAudioCleanup couldn't", "Couldn't")) from None
 
 
 # -- display -------------------------------------------------------------------

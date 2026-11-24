@@ -87,8 +87,8 @@ struct FormattingTests {
 
     @Test func errorCopy() {
         #expect(Formatting.errorTitle(for: .noAudio) == "This file has no audio")
-        #expect(Formatting.errorTitle(for: .decodeFailed) == "Booth couldn't read this file")
-        #expect(Formatting.errorTitle(for: .decodeFailed, fileCount: 2) == "Booth couldn't read these files")
+        #expect(Formatting.errorTitle(for: .decodeFailed) == "OrcaAudioCleanup couldn't read this file")
+        #expect(Formatting.errorTitle(for: .decodeFailed, fileCount: 2) == "OrcaAudioCleanup couldn't read these files")
         #expect(Formatting.errorTitle(for: .noAudio, fileCount: 2) == "This file has no audio")
         #expect(Formatting.errorTitle(for: .engineFailed) == "Something went wrong")
         #expect(Formatting.errorTitle(for: .internal) == "Something went wrong")
@@ -110,20 +110,20 @@ struct FormattingTests {
     }
 
     @Test func unsupportedFileCopy() {
-        #expect(Formatting.unsupportedFileBody(name: "notes.pdf") == "notes.pdf isn't an audio or video file Booth can read. Nothing was changed.")
+        #expect(Formatting.unsupportedFileBody(name: "notes.pdf") == "notes.pdf isn't an audio or video file OrcaAudioCleanup can read. Nothing was changed.")
         #expect(Formatting.unsupportedFileBody(names: ["notes.pdf", "a.txt", "b.zip"])
-            == "notes.pdf and 2 more aren't audio or video files Booth can read. Nothing was changed.")
-        #expect(Formatting.unsupportedSelectionText(count: 1) == "Booth can't enhance the selected file")
-        #expect(Formatting.unsupportedSelectionText(count: 3) == "Booth can't enhance the selected files")
+            == "notes.pdf and 2 more aren't audio or video files OrcaAudioCleanup can read. Nothing was changed.")
+        #expect(Formatting.unsupportedSelectionText(count: 1) == "OrcaAudioCleanup can't enhance the selected file")
+        #expect(Formatting.unsupportedSelectionText(count: 3) == "OrcaAudioCleanup can't enhance the selected files")
         #expect(Formatting.remixFailedBody(name: "a.wav") == "The new mix for a.wav wasn't saved. Its file still has the previous mix.")
     }
 
     @Test func engineWaitingCopy() {
         #expect(Formatting.engineWaitingTitle == "Waiting for the engine")
         #expect(Formatting.engineWaitingBody(folder: "~/Documents/projects/booth")
-            == "Booth's engine in ~/Documents/projects/booth is taking a while to start. If macOS is asking whether Booth may access that folder, choose Allow.")
+            == "OrcaAudioCleanup's engine in ~/Documents/projects/booth is taking a while to start. If macOS is asking whether OrcaAudioCleanup may access that folder, choose Allow.")
         #expect(Formatting.engineUnresponsiveMessage(folder: "~/Documents/sv")
-            == "Booth's engine in ~/Documents/sv isn't answering. If macOS asked whether Booth may access that folder, choose Allow, then click Try again.")
+            == "OrcaAudioCleanup's engine in ~/Documents/sv isn't answering. If macOS asked whether OrcaAudioCleanup may access that folder, choose Allow, then click Try again.")
     }
 
     @Test(arguments: [

@@ -117,7 +117,7 @@ final class AppModel {
     static let unseenLimit = 10
 
     nonisolated static let defaultStemsRoot = FileManager.default.homeDirectoryForCurrentUser
-        .appendingPathComponent("Library/Caches/Booth/jobs", isDirectory: true)
+        .appendingPathComponent("Library/Caches/OrcaAudioCleanup/jobs", isDirectory: true)
 
     init(
         settings: Settings,
@@ -1085,7 +1085,7 @@ extension AppModel {
         let model = AppModel(settings: Settings(store: InMemorySettingsStore()), dependencies: .inert)
         model.setup = .ready
         model.isOpen = true
-        let folder = URL(fileURLWithPath: "/Users/Shared/Booth Fixtures", isDirectory: true)
+        let folder = URL(fileURLWithPath: "/Users/Shared/OrcaAudioCleanup Fixtures", isDirectory: true)
 
         func doneJob(_ name: String, took: Double, music: Bool) -> Job {
             var job = Job(input: folder.appendingPathComponent(name), state: .done)

@@ -8,10 +8,10 @@ background = defines["background"]  # noqa: F821
 
 format = "ULFO"  # lzfse: smaller and faster to open than zlib, and every macOS Booth runs on reads it
 filesystem = "HFS+"
-files = [(app, "Booth.app")]
+files = [(app, "OrcaAudioCleanup.app")]
 symlinks = {"Applications": "/Applications"}
 # The volume's own icon, on the desktop and in the sidebar while the image is open.
-icon = os.path.join(app, "Contents", "Resources", "Booth.icns")
+icon = os.path.join(app, "Contents", "Resources", "OrcaAudioCleanup.icns")
 
 # 300 points of the background show under the title bar and macOS 26's tab bar (67 points);
 # earlier macOS has only the title bar and shows the 40 more the background runs to.
@@ -28,4 +28,4 @@ icon_size = 112
 text_size = 13
 label_pos = "bottom"
 # Icon centres, matching background.html.
-icon_locations = {"Booth.app": (160, 124), "Applications": (440, 124)}
+icon_locations = {"OrcaAudioCleanup.app": (160, 124), "Applications": (440, 124)}

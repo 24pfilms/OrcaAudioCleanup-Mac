@@ -30,10 +30,10 @@ enum Log {
         if let override = process.environment["BOOTH_LOG_DIR"] {
             return URL(fileURLWithPath: override, isDirectory: true)
         }
-        if process.processName != "Booth" {
+        if process.processName != "OrcaAudioCleanup" {
             return FileManager.default.temporaryDirectory.appendingPathComponent("BoothTestLogs", isDirectory: true)
         }
-        return FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Logs/Booth", isDirectory: true)
+        return FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Logs/OrcaAudioCleanup", isDirectory: true)
     }
 }
 
@@ -47,11 +47,11 @@ private final class LogWriter: @unchecked Sendable {
     private let rotatedURL: URL
     private let maxBytes: UInt64 = 5 * 1024 * 1024
     // Everything below is only touched on `queue`.
-    private let queue = DispatchQueue(label: "studio.booth.log", qos: .utility)
+    private let queue = DispatchQueue(label: "com.squarecirclelabs.orcaaudiocleanup.log", qos: .utility)
     private var handle: FileHandle?
     private var size: UInt64 = 0
     private let timestamp: DateFormatter
-    private let logger = Logger(subsystem: "studio.booth.Booth", category: "app")
+    private let logger = Logger(subsystem: "com.squarecirclelabs.OrcaAudioCleanup", category: "app")
     private let echoToStderr = isatty(STDERR_FILENO) == 1
 
     init(directory: URL) {

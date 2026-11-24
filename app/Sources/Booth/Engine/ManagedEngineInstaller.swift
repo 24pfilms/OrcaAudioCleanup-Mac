@@ -69,11 +69,11 @@ final class ManagedEngineInstaller {
     /// by and the seconds since uv started. Throws a `JobError` (`setup_failed`).
     func install(progress: @escaping @MainActor (_ bytesInstalled: Int64, _ elapsed: TimeInterval) -> Void) async throws -> URL {
         guard let source else {
-            throw JobError(code: .setupFailed, message: "Booth's engine files are missing from the app. Download Booth again and retry.")
+            throw JobError(code: .setupFailed, message: "OrcaAudioCleanup's engine files are missing from the app. Download OrcaAudioCleanup again and retry.")
         }
         await toolchain.prepare()
         guard let uv = toolchain.uv else {
-            throw JobError(code: .setupFailed, message: "Booth needs uv to install its engine. Install it with “brew install uv”, then try again.")
+            throw JobError(code: .setupFailed, message: "OrcaAudioCleanup needs uv to install its engine. Install it with “brew install uv”, then try again.")
         }
 
         Log.info("managed install: copying \(source.path) → \(destination.path)")
@@ -102,7 +102,7 @@ final class ManagedEngineInstaller {
         do {
             exit = try await sync.runToCompletion().exit
         } catch {
-            throw JobError(code: .setupFailed, message: "Booth couldn't run uv: \(error.localizedDescription)")
+            throw JobError(code: .setupFailed, message: "OrcaAudioCleanup couldn't run uv: \(error.localizedDescription)")
         }
         try Task.checkCancellation()
         guard exit.succeeded else {
@@ -116,7 +116,7 @@ final class ManagedEngineInstaller {
         do {
             try Data((version + "\n").utf8).write(to: stamp, options: .atomic)
         } catch {
-            throw JobError(code: .setupFailed, message: "Booth couldn't finish installing its engine: \(error.localizedDescription)")
+            throw JobError(code: .setupFailed, message: "OrcaAudioCleanup couldn't finish installing its engine: \(error.localizedDescription)")
         }
         Log.info("managed install: ready at \(executable.path) (engine \(version))")
         removeLeftovers()
@@ -161,7 +161,7 @@ final class ManagedEngineInstaller {
                     try manager.copyItem(at: from, to: to)
                 }
             } catch {
-                throw JobError(code: .setupFailed, message: "Booth couldn't copy its engine: \(error.localizedDescription)")
+                throw JobError(code: .setupFailed, message: "OrcaAudioCleanup couldn't copy its engine: \(error.localizedDescription)")
             }
         }.value
     }

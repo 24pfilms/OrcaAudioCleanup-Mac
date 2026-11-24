@@ -105,7 +105,7 @@ enum UpdateStatus: Equatable {
 }
 
 enum AppInfo {
-    static let bundleIdentifier = "studio.booth.Booth"
+    static let bundleIdentifier = "com.squarecirclelabs.OrcaAudioCleanup"
 
     /// `CFBundleShortVersionString`, or "0.1.0" when running outside the bundle.
     static var version: String {

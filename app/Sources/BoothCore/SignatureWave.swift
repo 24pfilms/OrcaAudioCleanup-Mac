@@ -24,7 +24,7 @@ public struct SignatureLetterStyle: Equatable, Sendable {
 /// The signature's soft focus and the focus wave that runs across it while a file is in the
 /// booth. A direct port of Popover.dc.html (SPEC §3.4).
 public enum SignatureWave {
-    public static let letters: [Character] = ["B", "o", "o", "t", "h"]
+    public static let letters: [Character] = ["O", "r", "c", "a"]
     /// One pass plus a short rest.
     public static let waveMilliseconds = 4200.0
     /// How far the crest reaches either side, in word widths.

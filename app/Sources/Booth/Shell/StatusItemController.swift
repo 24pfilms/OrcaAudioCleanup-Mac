@@ -32,7 +32,7 @@ final class StatusItemController: NSObject {
     /// The name macOS gives an app's first status item, and a second one the icon takes turns
     /// with while it settles: changing names makes macOS place it by the new name's position.
     private static let itemName = "Item-0"
-    private static let settlingName = "Booth settling"
+    private static let settlingName = "OrcaAudioCleanup settling"
     /// The first launch's search for the icon's place; nil once it has settled.
     private var settling: MenuBarPlacement.Search?
     private var settlingCheck: DispatchWorkItem?
@@ -119,7 +119,7 @@ final class StatusItemController: NSObject {
         button.action = #selector(buttonClicked)
         button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         button.imagePosition = .imageOnly
-        button.setAccessibilityLabel("Booth")
+        button.setAccessibilityLabel("OrcaAudioCleanup")
         button.image = GlyphRenderer.image(.idle, ink: menuBarInk)
 
         let dropView = StatusItemDropView(target: dropTarget)
@@ -395,7 +395,7 @@ private final class BreathingGlyphView: NSView {
     /// The button's image meanwhile: clear, the glyph's size, so the button keeps its own.
     static let placeholder: NSImage = {
         let image = NSImage(size: GlyphRenderer.size)
-        image.accessibilityDescription = "Booth"
+        image.accessibilityDescription = "OrcaAudioCleanup"
         return image
     }()
 

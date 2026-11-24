@@ -13,7 +13,7 @@ public struct Release: Equatable, Sendable {
     }
 
     /// GitHub's `releases/latest` JSON. nil when it has no version tag or nowhere to download
-    /// from. Every release uploads its image as `Booth.dmg` as well as `Booth-<version>.dmg`.
+    /// from. Every release uploads its image as `OrcaAudioCleanup.dmg` as well as `OrcaAudioCleanup-<version>.dmg`.
     public init?(gitHubJSON data: Data) {
         struct Answer: Decodable {
             struct Asset: Decodable {
@@ -26,8 +26,8 @@ public struct Release: Equatable, Sendable {
         }
         guard let answer = try? JSONDecoder().decode(Answer.self, from: data),
               UpdateCheck.components(answer.tag_name) != nil else { return nil }
-        let image = answer.assets?.first { $0.name == "Booth.dmg" }
-            ?? answer.assets?.first { $0.name.hasPrefix("Booth") && $0.name.hasSuffix(".dmg") }
+        let image = answer.assets?.first { $0.name == "OrcaAudioCleanup.dmg" }
+            ?? answer.assets?.first { $0.name.hasPrefix("OrcaAudioCleanup") && $0.name.hasSuffix(".dmg") }
         version = answer.tag_name.hasPrefix("v") ? String(answer.tag_name.dropFirst()) : answer.tag_name
         download = image?.browser_download_url ?? answer.html_url
     }
@@ -37,7 +37,7 @@ public struct Release: Equatable, Sendable {
 /// never the latest one.
 public enum UpdateCheck {
     /// The repository whose releases hold Booth (`BOOTH_REPOSITORY` in packaging/release.env).
-    public static let latestRelease = URL(string: "https://api.github.com/repos/shrimbly/booth/releases/latest")!
+    public static let latestRelease = URL(string: "https://api.github.com/repos/24pfilms/OrcaAudioCleanup-Mac/releases/latest")!
 
     /// Whether `candidate` is a later version than `current`. Numbers are compared part by part,
     /// so 0.10.0 is after 0.9.1 and 1.2 equals 1.2.0. A version that isn't one is never newer.

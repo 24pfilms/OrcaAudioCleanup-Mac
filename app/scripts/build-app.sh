@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds Booth.app from the SwiftPM package in app/: compiles it, renders the icon, assembles the
+# Builds OrcaAudioCleanup.app from the SwiftPM package in app/: compiles it, assembles the
 # bundle with the engine source, uv, the booth command and the license notices inside, signs
 # it with the hardened runtime and verifies the result. It signs with the local identity from
 # make-signing-identity.sh when there is one, otherwise ad hoc, unless --sign. Safe to run
@@ -14,25 +14,25 @@ usage() {
 usage: build-app.sh [--debug] [--dist] [--install] [--open] [--sign IDENTITY]
 
   --debug          build the debug configuration instead of release
-  --dist           build for other Macs: don't point Booth at this checkout's engine, strip the
+  --dist           build for other Macs: don't point the app at this checkout's engine, strip the
                    debug map (it names this Mac's build folder), and require a bundled uv. With a
                    Developer ID identity (by name or by hash), signatures get a secure timestamp.
-  --install        copy the app to ~/Applications/Booth.app (quits a Booth running from there first)
+  --install        copy the app to ~/Applications/OrcaAudioCleanup.app (quits one running from there first)
   --open           launch the app when done (the installed copy with --install)
   --sign IDENTITY  sign with this keychain identity (as `security find-identity -v -p codesigning`
-                   lists it), or - for ad hoc. Without it, Booth is signed with the local identity
+                   lists it), or - for ad hoc. Without it, the app is signed with the local identity
                    from make-signing-identity.sh if you made one, and ad hoc otherwise. An ad hoc
                    signature changes with every build, so macOS asks again for permissions it gave
                    the last one; any other identity keeps them.
 
 environment (mostly for testing this script):
   BOOTH_PACKAGE_DIR  SwiftPM package to build          default: the app/ folder holding this script
-  BOOTH_BUILD_DIR    where Booth.app and the icon go   default: $BOOTH_PACKAGE_DIR/build
+  BOOTH_BUILD_DIR    where OrcaAudioCleanup.app goes              default: $BOOTH_PACKAGE_DIR/build
   BOOTH_REPO_DIR     Booth checkout to bundle    default: the repo holding this script
   BOOTH_INSTALL_DIR  --install destination             default: ~/Applications
   BOOTH_UV           uv binary to bundle               default: `command -v uv`; set it empty to skip
   BOOTH_SIGN_IDENTITY  as --sign                       default: the local identity, else ad hoc
-  BOOTH_SIGNING_DIR  the local identity's folder       default: ~/Library/Application Support/Booth Signing
+  BOOTH_SIGNING_DIR  the local identity's folder       default: ~/Library/Application Support/OrcaAudioCleanup Signing
   BOOTH_BUILD_NUMBER CFBundleVersion                   default: the commit count, else 1
 EOF
 }
@@ -88,26 +88,27 @@ package_dir=$(absolute_dir "${BOOTH_PACKAGE_DIR:-$app_dir}")
 repo_dir=$(absolute_dir "${BOOTH_REPO_DIR:-$(dirname "$app_dir")}")
 resources=$package_dir/Resources
 
-for tool in swift codesign plutil iconutil rsync ditto lipo strip; do
+for tool in swift codesign plutil rsync ditto lipo strip; do
 	command -v "$tool" >/dev/null || die "$tool not found; install the Command Line Tools with xcode-select --install"
 done
 [[ -f $package_dir/Package.swift ]] || die "no Package.swift in $package_dir"
 [[ -f $resources/Info.plist ]] || die "no Info.plist template in $resources"
 [[ -d $resources/Fonts ]] || die "no Fonts folder in $resources"
+[[ -f $resources/OrcaAudioCleanup.icns ]] || die "no OrcaAudioCleanup.icns in $resources"
 [[ -f $resources/Booth.entitlements ]] || die "no Booth.entitlements in $resources"
 [[ -x $resources/bin/booth ]] || die "no executable bin/booth in $resources"
 for path in src/booth pyproject.toml uv.lock README.md; do
 	[[ -e $repo_dir/$path ]] || die "the engine source is incomplete: $repo_dir/$path is missing"
 done
 for path in LICENSE THIRD_PARTY_NOTICES.md; do
-	[[ -f $repo_dir/$path ]] || die "no $path in $repo_dir; Booth.app must carry it"
+	[[ -f $repo_dir/$path ]] || die "no $path in $repo_dir; OrcaAudioCleanup.app must carry it"
 done
 
 mkdir -p "${BOOTH_BUILD_DIR:-$package_dir/build}"
 build_dir=$(absolute_dir "${BOOTH_BUILD_DIR:-$package_dir/build}")
 install_dir=${BOOTH_INSTALL_DIR:-$HOME/Applications}
-bundle=$build_dir/Booth.app
-signing_dir=${BOOTH_SIGNING_DIR:-$HOME/Library/Application Support/Booth Signing}
+bundle=$build_dir/OrcaAudioCleanup.app
+signing_dir=${BOOTH_SIGNING_DIR:-$HOME/Library/Application Support/OrcaAudioCleanup Signing}
 signing_keychain=$signing_dir/signing.keychain-db
 
 staging=
@@ -154,55 +155,49 @@ restore_keychains() {
 	saved_keychains=()
 }
 
-# Stops a Booth running from exactly this bundle so a reinstall or relaunch runs the new build.
+# Stops an OrcaAudioCleanup running from exactly this bundle so a reinstall or relaunch runs the new build.
 # SIGTERM goes through NSApp.terminate, which cancels running engines before quitting.
 stop_running_booth() {
-	local executable=$1/Contents/MacOS/Booth pattern pids
+	local executable=$1/Contents/MacOS/OrcaAudioCleanup pattern pids
 	pattern="^${executable//./\\.}( |\$)"
 	pids=$(pgrep -f "$pattern" || true)
 	[[ -n $pids ]] || return 0
-	log "Quitting the Booth running from $1"
+	log "Quitting the OrcaAudioCleanup running from $1"
 	# shellcheck disable=SC2086 # one pid per word
 	kill -TERM $pids 2>/dev/null || true
 	for _ in {1..50}; do
 		pgrep -f "$pattern" >/dev/null || return 0
 		sleep 0.1
 	done
-	die "Booth (pid $pids) did not quit; quit it from its menu and run again"
+	die "OrcaAudioCleanup (pid $pids) did not quit; quit it from its menu and run again"
 }
 
 # --- 1. Compile ------------------------------------------------------------------------------------
 
-log "Building Booth ($configuration) in $package_dir"
-swift build --package-path "$package_dir" --configuration "$configuration" --product Booth >&2
-executable=$(swift build --package-path "$package_dir" --configuration "$configuration" --show-bin-path)/Booth
+log "Building OrcaAudioCleanup ($configuration) in $package_dir"
+swift build --package-path "$package_dir" --configuration "$configuration" --product OrcaAudioCleanup >&2
+executable=$(swift build --package-path "$package_dir" --configuration "$configuration" --show-bin-path)/OrcaAudioCleanup
 [[ -x $executable ]] || die "swift build left no executable at $executable"
 
-# --- 2. Icon (re-rendered only when make-icon.swift changes) ---------------------------------------
-
-icon_dir=$build_dir/icon
-if [[ ! -f $icon_dir/Booth.icns || $script_dir/make-icon.swift -nt $icon_dir/Booth.icns ]]; then
-	log "Rendering the app icon"
-	swift "$script_dir/make-icon.swift" "$icon_dir" >/dev/null
-fi
+# --- 2. Icon: committed as Resources/OrcaAudioCleanup.icns (packaging/icon/make_icns.py draws it) ---
 
 # --- 3. Assemble in a staging folder, so a failed run never leaves a half-built bundle -------------
 
 staging=$build_dir/.staging
 rm -rf "$staging"
-staged_bundle=$staging/Booth.app
+staged_bundle=$staging/OrcaAudioCleanup.app
 contents=$staged_bundle/Contents
 mkdir -p "$contents/MacOS" "$contents/Resources"
 
-log "Assembling Booth.app"
-cp "$executable" "$contents/MacOS/Booth"
+log "Assembling OrcaAudioCleanup.app"
+cp "$executable" "$contents/MacOS/OrcaAudioCleanup"
 if $distribution; then
 	# The debug map names every object file by its path on this Mac, user name included; a
 	# shipped binary has no use for it.
-	strip -S "$contents/MacOS/Booth"
+	strip -S "$contents/MacOS/OrcaAudioCleanup"
 fi
 printf 'APPL????' >"$contents/PkgInfo"
-cp "$icon_dir/Booth.icns" "$contents/Resources/Booth.icns"
+cp "$resources/OrcaAudioCleanup.icns" "$contents/Resources/OrcaAudioCleanup.icns"
 rsync -a --exclude .DS_Store "$resources/Fonts/" "$contents/Resources/Fonts/"
 # Booth's license, and the notices for what it redistributes (uv, Geist Serif).
 cp "$repo_dir/LICENSE" "$repo_dir/THIRD_PARTY_NOTICES.md" "$contents/Resources/"
@@ -219,12 +214,12 @@ plutil -replace CFBundleVersion -string "$build_number" "$plist"
 log "Version $version ($build_number)"
 engine=$repo_dir/.venv/bin/booth
 if $distribution; then
-	log "Distribution build: Booth will find or install its own engine"
+	log "Distribution build: OrcaAudioCleanup will find or install its own engine"
 elif [[ -x $engine ]]; then
 	plutil -replace BoothEnginePath -string "$engine" "$plist"
 	log "Engine: $engine (BoothEnginePath)"
 else
-	warn "no engine at $engine; Booth will search for one and offer to install it on first run"
+	warn "no engine at $engine; OrcaAudioCleanup will search for one and offer to install it on first run"
 fi
 
 # The managed engine install (first-run setup) is created from this copy with `uv sync --frozen`.
@@ -260,10 +255,10 @@ if [[ -z $sign_identity && -f $signing_keychain ]]; then
 	security unlock-keychain -p "$(cat "$signing_dir/password")" "$signing_keychain" ||
 		die "could not unlock $signing_keychain; delete $signing_dir and run make-signing-identity.sh again"
 	# By hash: codesign won't look up an identity macOS doesn't trust by its name.
-	sign_identity=$(security find-identity -p codesigning "$signing_keychain" | awk '/"Booth Local Signing"/ { print $2; exit }')
+	sign_identity=$(security find-identity -p codesigning "$signing_keychain" | awk '/"OrcaAudioCleanup Local Signing"/ { print $2; exit }')
 	[[ -n $sign_identity ]] ||
-		die "no Booth Local Signing identity in $signing_keychain; delete $signing_dir and run make-signing-identity.sh again"
-	log "Signing with Booth Local Signing"
+		die "no OrcaAudioCleanup Local Signing identity in $signing_keychain; delete $signing_dir and run make-signing-identity.sh again"
+	log "Signing with OrcaAudioCleanup Local Signing"
 	add_signing_keychain
 elif [[ -z $sign_identity || $sign_identity == - ]]; then
 	sign_identity=-
@@ -313,7 +308,7 @@ for signed in "$staged_bundle" "$contents/Resources/bin/uv"; do
 		die "${signed##*/}'s Developer ID signature has no secure timestamp, which notarization needs"
 	fi
 done
-log "Architectures: $(lipo -archs "$contents/MacOS/Booth")"
+log "Architectures: $(lipo -archs "$contents/MacOS/OrcaAudioCleanup")"
 
 rm -rf "$bundle"
 mv "$staged_bundle" "$bundle"
@@ -323,14 +318,14 @@ log "Built $bundle"
 
 final=$bundle
 if $install; then
-	final=$install_dir/Booth.app
+	final=$install_dir/OrcaAudioCleanup.app
 	mkdir -p "$install_dir"
 	stop_running_booth "$final"
 	rm -rf "$final"
 	ditto "$bundle" "$final"
-	# Register now so Open With and the "Enhance with Booth" Quick Action find this copy right away.
+	# Register now so Open With and the "Clean up with OrcaAudioCleanup" Quick Action find this copy right away.
 	lsregister=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister
-	"$lsregister" -f "$final" || warn "lsregister failed; Open With may take a while to list Booth"
+	"$lsregister" -f "$final" || warn "lsregister failed; Open With may take a while to list OrcaAudioCleanup"
 	/System/Library/CoreServices/pbs -update || warn "could not refresh the Services menu"
 	log "Installed $final"
 fi

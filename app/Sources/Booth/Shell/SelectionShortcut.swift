@@ -8,7 +8,7 @@ import Carbon.HIToolbox
 final class SelectionShortcut {
     /// Shown when Booth may not read the Finder selection; it would otherwise look like nothing
     /// was selected, forever.
-    static let finderAccessDeniedText = "Allow Booth to control Finder in System Settings"
+    static let finderAccessDeniedText = "Allow OrcaAudioCleanup to control Finder in System Settings"
     /// Shown when Finder doesn't answer in time, so a busy Finder doesn't read as no selection.
     static let finderNotRespondingText = "Finder didn't answer in time. Try again"
 

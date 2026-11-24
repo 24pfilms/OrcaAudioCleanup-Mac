@@ -49,9 +49,7 @@ the steps:
 
 1. `swift build -c release --product Booth`. A release build doesn't compile in the source-tree
    fallback described below.
-2. Render the icon with `make-icon.swift`. The script reuses the cached
-   `app/build/icon/Booth.icns` until `make-icon.swift` changes. The icon's 1024 px preview is
-   `app/build/icon/Booth-1024.png`.
+2. Take the icon, `Resources/OrcaAudioCleanup.icns` (redraw it with `python packaging/icon/make_icns.py`).
 3. Assemble `Booth.app`:
    - Copy the `Resources/Info.plist` template, and set its version from `pyproject.toml` (the build
      number is the commit count, or `BOOTH_BUILD_NUMBER`). Unless `--dist`, if
@@ -347,7 +345,7 @@ app/
   Resources/                 Info.plist template, Booth.entitlements, Fonts/ (Geist Serif + OFL),
                              bin/booth (the command line shim bundled in the app)
   scripts/                   build-app.sh, make-dmg.sh, release.sh, set-release-secrets.sh,
-                             make-icon.swift, make-signing-identity.sh
+                             make-signing-identity.sh
 ```
 
 `AppModel` is where everything connects. The UI reads its state and calls its intents. The shell

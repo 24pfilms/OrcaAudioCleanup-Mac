@@ -1,12 +1,12 @@
 # Homebrew cask for Booth. app/scripts/release.sh fills in the @…@ values and writes the result to
 # dist/booth.rb; with --publish it commits that as Casks/booth.rb to the tap (BOOTH_TAP), so:
 #   brew install --cask shrimbly/booth/booth
-cask "booth" do
+cask "orcaaudiocleanup" do
   version "@VERSION@"
   sha256 "@SHA256@"
 
-  url "https://github.com/@REPOSITORY@/releases/download/v#{version}/Booth-#{version}.dmg"
-  name "Booth"
+  url "https://github.com/@REPOSITORY@/releases/download/v#{version}/OrcaAudioCleanup-#{version}.dmg"
+  name "OrcaAudioCleanup"
   desc "Studio-quality voice for your recordings, enhanced locally"
   homepage "@HOMEPAGE@"
 
@@ -19,16 +19,16 @@ cask "booth" do
   depends_on formula: "ffmpeg"
   depends_on macos: :sonoma
 
-  app "Booth.app"
-  binary "#{appdir}/Booth.app/Contents/Resources/bin/booth"
+  app "OrcaAudioCleanup.app"
+  binary "#{appdir}/OrcaAudioCleanup.app/Contents/Resources/bin/booth"
 
-  uninstall quit: "studio.booth.Booth"
+  uninstall quit: "com.squarecirclelabs.OrcaAudioCleanup"
 
   zap trash: [
     "~/.cache/booth",
-    "~/Library/Application Support/Booth",
-    "~/Library/Caches/Booth",
-    "~/Library/Logs/Booth",
-    "~/Library/Preferences/studio.booth.Booth.plist",
+    "~/Library/Application Support/OrcaAudioCleanup",
+    "~/Library/Caches/OrcaAudioCleanup",
+    "~/Library/Logs/OrcaAudioCleanup",
+    "~/Library/Preferences/com.squarecirclelabs.OrcaAudioCleanup.plist",
   ]
 end

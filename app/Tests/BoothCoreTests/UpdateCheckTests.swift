@@ -23,13 +23,13 @@ struct UpdateCheckTests {
             {"tag_name": "v0.2.0", "html_url": "https://github.com/shrimbly/booth/releases/tag/v0.2.0",
              "draft": false, "prerelease": false,
              "assets": [
-               {"name": "Booth-0.2.0.dmg", "browser_download_url": "https://github.com/shrimbly/booth/releases/download/v0.2.0/Booth-0.2.0.dmg"},
-               {"name": "Booth.dmg", "browser_download_url": "https://github.com/shrimbly/booth/releases/download/v0.2.0/Booth.dmg"},
+               {"name": "OrcaAudioCleanup-0.2.0.dmg", "browser_download_url": "https://github.com/shrimbly/booth/releases/download/v0.2.0/OrcaAudioCleanup-0.2.0.dmg"},
+               {"name": "OrcaAudioCleanup.dmg", "browser_download_url": "https://github.com/shrimbly/booth/releases/download/v0.2.0/OrcaAudioCleanup.dmg"},
                {"name": "SHA256SUMS", "browser_download_url": "https://github.com/shrimbly/booth/releases/download/v0.2.0/SHA256SUMS"}]}
             """
         let release = try #require(Release(gitHubJSON: Data(json.utf8)))
         #expect(release.version == "0.2.0")
-        #expect(release.download.absoluteString == "https://github.com/shrimbly/booth/releases/download/v0.2.0/Booth.dmg")
+        #expect(release.download.absoluteString == "https://github.com/shrimbly/booth/releases/download/v0.2.0/OrcaAudioCleanup.dmg")
     }
 
     @Test func withoutAnImageTheReleasePageIsTheDownload() throws {

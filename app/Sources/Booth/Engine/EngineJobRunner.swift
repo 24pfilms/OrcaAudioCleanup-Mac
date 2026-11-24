@@ -45,14 +45,14 @@ final class EngineJobRunner: JobRunner {
             return
         }
         guard let executable = locator.installation?.executable else {
-            failLater(events, JobError(code: .setupRequired, message: "Booth's engine isn't set up yet."))
+            failLater(events, JobError(code: .setupRequired, message: "OrcaAudioCleanup's engine isn't set up yet."))
             return
         }
         let stems = options.stemsDirectory
         do {
             try JobCache.prepare(stems)
         } catch {
-            failLater(events, JobError(code: .internal, message: "Booth couldn't create its working folder: \(error.localizedDescription)"))
+            failLater(events, JobError(code: .internal, message: "OrcaAudioCleanup couldn't create its working folder: \(error.localizedDescription)"))
             return
         }
 
@@ -68,7 +68,7 @@ final class EngineJobRunner: JobRunner {
         } catch {
             running[job.id] = nil
             JobCache.removeInBackground(stems) // nothing ran in it
-            failLater(events, JobError(code: .engineFailed, message: "Booth couldn't start its engine: \(error.localizedDescription)"))
+            failLater(events, JobError(code: .engineFailed, message: "OrcaAudioCleanup couldn't start its engine: \(error.localizedDescription)"))
             return
         }
         updateActivity()

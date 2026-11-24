@@ -78,7 +78,7 @@ public enum Formatting {
     public static func errorTitle(for code: JobError.Code, fileCount: Int = 1) -> String {
         switch code {
         case .noAudio: "This file has no audio"
-        case .decodeFailed: fileCount > 1 ? "Booth couldn't read these files" : "Booth couldn't read this file"
+        case .decodeFailed: fileCount > 1 ? "OrcaAudioCleanup couldn't read these files" : "OrcaAudioCleanup couldn't read this file"
         default: "Something went wrong"
         }
     }
@@ -99,12 +99,12 @@ public enum Formatting {
     public static let engineWaitingTitle = "Waiting for the engine"
 
     public static func engineWaitingBody(folder: String) -> String {
-        "Booth's engine in \(folder) is taking a while to start. If macOS is asking whether Booth may access that folder, choose Allow."
+        "OrcaAudioCleanup's engine in \(folder) is taking a while to start. If macOS is asking whether OrcaAudioCleanup may access that folder, choose Allow."
     }
 
     /// First-run failure body when the engine never answered `app-info`.
     public static func engineUnresponsiveMessage(folder: String) -> String {
-        "Booth's engine in \(folder) isn't answering. If macOS asked whether Booth may access that folder, choose Allow, then click Try again."
+        "OrcaAudioCleanup's engine in \(folder) isn't answering. If macOS asked whether OrcaAudioCleanup may access that folder, choose Allow, then click Try again."
     }
 
     /// The folder to name for an engine executable: `~` for the home folder, and the project
@@ -128,9 +128,9 @@ public enum Formatting {
         let first = names.first ?? "This file"
         let others = names.count - 1
         if others > 0 {
-            return "\(first) and \(others) more aren't audio or video files Booth can read. Nothing was changed."
+            return "\(first) and \(others) more aren't audio or video files OrcaAudioCleanup can read. Nothing was changed."
         }
-        return "\(first) isn't an audio or video file Booth can read. Nothing was changed."
+        return "\(first) isn't an audio or video file OrcaAudioCleanup can read. Nothing was changed."
     }
 
     public static func unsupportedFileBody(name: String) -> String {
@@ -139,7 +139,7 @@ public enum Formatting {
 
     /// Capsule HUD when ⌃⌥E finds only files Booth can't take selected in Finder.
     public static func unsupportedSelectionText(count: Int) -> String {
-        count > 1 ? "Booth can't enhance the selected files" : "Booth can't enhance the selected file"
+        count > 1 ? "OrcaAudioCleanup can't enhance the selected files" : "OrcaAudioCleanup can't enhance the selected file"
     }
 
     /// Error screen body when a background Save (remix) of a job that is no longer on screen fails.

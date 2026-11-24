@@ -68,7 +68,7 @@ private final class SelfTestSession {
             say("FAIL: engine \(installation.executable.path) is not ready; missing \(installation.info.missing.joined(separator: ", "))")
             return 1
         case .needsSetup(nil) where locator.managedInstallNeedsUpdate:
-            say("FAIL: the managed engine is older than the one bundled with Booth; open Booth to update it")
+            say("FAIL: the managed engine is older than the one bundled with OrcaAudioCleanup; open OrcaAudioCleanup to update it")
             return 1
         case .needsSetup(nil):
             say("FAIL: no engine found (see \(Log.fileURL.path))")

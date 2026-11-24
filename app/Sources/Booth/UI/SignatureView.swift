@@ -2,7 +2,7 @@ import BoothCore
 import CoreText
 import SwiftUI
 
-/// The "Booth" signature at the frame's bottom left (SPEC §3.4): five Geist Serif letters, each
+/// The "Orca" signature at the frame's bottom left (SPEC §3.4): four Geist Serif letters, each
 /// with its own colour and blur. It rests slightly out of focus, with soft clouds of mist drifting
 /// through it (`SignatureMist`), and sharpens while a file is over the popover; the pointer on it
 /// brings only the letters right around it partly into focus.
@@ -84,7 +84,7 @@ struct SignatureView: View {
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Booth")
+        .accessibilityLabel("OrcaAudioCleanup")
         .accessibilityAddTraits(.isHeader)
     }
 
@@ -315,7 +315,7 @@ struct SignatureGlyph {
     /// The advance plus letter-spacing: the room the letter takes in the row.
     let width: CGFloat
 
-    /// The five letters of "Booth" at the signature size. Built on first use, after launch has
+    /// The four letters of "Orca" at the signature size. Built on first use, after launch has
     /// registered the bundled font.
     static let booth = make(
         SignatureWave.letters, size: SignatureView.fontSize, tracking: SignatureView.tracking, weight: SignatureView.weight)

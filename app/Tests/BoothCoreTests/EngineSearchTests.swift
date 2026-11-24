@@ -19,7 +19,7 @@ struct EngineSearchTests {
             "/opt/pref/booth",
             "/opt/env/booth",
             "/repo/.venv/bin/booth",
-            "/Users/me/Library/Application Support/Booth/engine/.venv/bin/booth",
+            "/Users/me/Library/Application Support/OrcaAudioCleanup/engine/.venv/bin/booth",
             "/Users/me/.local/bin/booth",
         ])
     }
@@ -38,13 +38,13 @@ struct EngineSearchTests {
         // The preference resolves to the same file as the flag, and so does ~/.local/bin.
         #expect(candidates == [
             EngineCandidate(path: "/Users/me/.local/bin/booth", source: .launchArgument),
-            EngineCandidate(path: "/Users/me/Library/Application Support/Booth/engine/.venv/bin/booth", source: .managedInstall),
+            EngineCandidate(path: "/Users/me/Library/Application Support/OrcaAudioCleanup/engine/.venv/bin/booth", source: .managedInstall),
         ])
     }
 
     @Test func managedInstallPaths() {
-        #expect(EngineSearch.managedEngineDirectory(home: home).path == "/Users/me/Library/Application Support/Booth/engine")
-        #expect(EngineSearch.managedExecutable(home: home).path == "/Users/me/Library/Application Support/Booth/engine/.venv/bin/booth")
+        #expect(EngineSearch.managedEngineDirectory(home: home).path == "/Users/me/Library/Application Support/OrcaAudioCleanup/engine")
+        #expect(EngineSearch.managedExecutable(home: home).path == "/Users/me/Library/Application Support/OrcaAudioCleanup/engine/.venv/bin/booth")
     }
 
     @Test func readsThePathALoginShellPrints() {
@@ -55,7 +55,7 @@ struct EngineSearchTests {
     }
 
     @Test func managedVersionStampSitsBesideTheEnvironment() {
-        #expect(EngineSearch.managedVersionStamp(home: home).path == "/Users/me/Library/Application Support/Booth/engine/.booth-engine-version")
+        #expect(EngineSearch.managedVersionStamp(home: home).path == "/Users/me/Library/Application Support/OrcaAudioCleanup/engine/.booth-engine-version")
     }
 
     @Test func readsTheEngineVersion() {
@@ -81,10 +81,10 @@ struct EngineSearchTests {
     }
 
     @Test func tellsWhetherAPathIsInsideAFolder() {
-        let bundle = "/Applications/Booth.app"
-        #expect(EngineSearch.isInside("/Applications/Booth.app/Contents/Resources/bin/booth", directory: bundle))
-        #expect(EngineSearch.isInside("/Applications/Booth.app/Contents/Resources/bin/booth", directory: bundle + "/"))
-        #expect(!EngineSearch.isInside("/Applications/Booth.app.old/booth", directory: bundle))
+        let bundle = "/Applications/OrcaAudioCleanup.app"
+        #expect(EngineSearch.isInside("/Applications/OrcaAudioCleanup.app/Contents/Resources/bin/booth", directory: bundle))
+        #expect(EngineSearch.isInside("/Applications/OrcaAudioCleanup.app/Contents/Resources/bin/booth", directory: bundle + "/"))
+        #expect(!EngineSearch.isInside("/Applications/OrcaAudioCleanup.app.old/booth", directory: bundle))
         #expect(!EngineSearch.isInside("/opt/homebrew/bin/booth", directory: bundle))
     }
 }

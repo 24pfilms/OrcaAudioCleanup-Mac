@@ -79,7 +79,7 @@ final class SetupRunner: SetupRunning {
                 Log.info("setup: \(missingTools.joined(separator: ", ")) not found; the engine will download them")
             }
             Log.info(locator.managedInstallNeedsUpdate
-                ? "setup: updating the managed install to the engine bundled with Booth"
+                ? "setup: updating the managed install to the engine bundled with OrcaAudioCleanup"
                 : "setup: no engine; creating the managed install")
             let installing = SetupProgressCombiner(installBytesExpected: SetupProgressCombiner.typicalEnvironmentBytes)
             events(.setup(installing.installing(bytesInstalled: 0, elapsed: 0)))
@@ -109,7 +109,7 @@ final class SetupRunner: SetupRunning {
             return
         case .needsSetup(let installation):
             let missing = installation?.info.missing.joined(separator: ", ") ?? "the engine"
-            throw JobError(code: .setupFailed, message: "Setup finished, but Booth is still missing \(missing). Try again.")
+            throw JobError(code: .setupFailed, message: "Setup finished, but OrcaAudioCleanup is still missing \(missing). Try again.")
         case .unresponsive(let candidate):
             throw unresponsive(candidate)
         }
@@ -139,7 +139,7 @@ final class SetupRunner: SetupRunning {
         } catch is CancellationError {
             throw CancellationError()
         } catch {
-            throw JobError(code: .setupFailed, message: "Booth couldn't start its engine: \(error.localizedDescription)")
+            throw JobError(code: .setupFailed, message: "OrcaAudioCleanup couldn't start its engine: \(error.localizedDescription)")
         }
         combiner = state.combiner
         try Task.checkCancellation()

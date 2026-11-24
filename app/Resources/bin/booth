@@ -1,16 +1,16 @@
 #!/bin/sh
 # booth, the command line half of Booth. It runs the engine Booth installs in
-# ~/Library/Application Support/Booth/engine, and installs or updates that engine first, the way
+# ~/Library/Application Support/OrcaAudioCleanup/engine, and installs or updates that engine first, the way
 # Booth's first run does, when it is missing or older than this copy of Booth.
 #
-# Homebrew links this file onto your PATH. With Booth from the DMG, link it yourself:
-#   ln -s /Applications/Booth.app/Contents/Resources/bin/booth /usr/local/bin/booth
+# Homebrew links this file onto your PATH. With OrcaAudioCleanup from the DMG, link it yourself:
+#   ln -s /Applications/OrcaAudioCleanup.app/Contents/Resources/bin/booth /usr/local/bin/booth
 set -eu
 
 self=$(realpath "$0")
 resources=$(dirname "$(dirname "$self")")
 bundled=$resources/engine
-engine_dir=$HOME/Library/Application\ Support/Booth/engine
+engine_dir=$HOME/Library/Application\ Support/OrcaAudioCleanup/engine
 engine=$engine_dir/.venv/bin/booth
 # The engine version the last successful install was for. Booth writes it too. It is emptied
 # before an install changes anything, so one that fails or is interrupted is redone next time.
@@ -47,18 +47,18 @@ fi
 if [ ! -x "$engine" ] || [ "$installed" != "$wanted" ]; then
 	# Booth sets this for the engines it starts: it installs and updates the engine itself.
 	if [ -n "${BOOTH_NO_INSTALL:-}" ]; then
-		echo "booth: the engine is missing or out of date, and BOOTH_NO_INSTALL is set. Open Booth to install it." >&2
+		echo "booth: the engine is missing or out of date, and BOOTH_NO_INSTALL is set. Open OrcaAudioCleanup to install it." >&2
 		exit 1
 	fi
 	if [ ! -d "$bundled/src/booth" ]; then
-		echo "booth: Booth's engine files are missing. Download Booth again." >&2
+		echo "booth: OrcaAudioCleanup's engine files are missing. Download OrcaAudioCleanup again." >&2
 		exit 1
 	fi
 	if [ -z "$uv" ]; then
 		echo "booth: installing the engine needs uv. Install it with: brew install uv" >&2
 		exit 1
 	fi
-	echo "Installing Booth's engine. This happens once and takes a minute or two." >&2
+	echo "Installing OrcaAudioCleanup's engine. This happens once and takes a minute or two." >&2
 	mkdir -p "$engine_dir"
 	: >"$stamp"
 	for item in src pyproject.toml uv.lock README.md BUILD; do

@@ -144,7 +144,7 @@ final class EngineLocator: EngineLocating {
                 timeout: responseTimeout, slowAfter: validationTimeout,
                 onSlow: {
                     wasSlow = true
-                    Log.info("\(label): app-info has not answered after \(Self.seconds(validationTimeout)) s; waiting up to \(Self.seconds(responseTimeout)) s (macOS may be asking whether Booth may access this folder)")
+                    Log.info("\(label): app-info has not answered after \(Self.seconds(validationTimeout)) s; waiting up to \(Self.seconds(responseTimeout)) s (macOS may be asking whether OrcaAudioCleanup may access this folder)")
                     onSlow?()
                 })
             let info = events.lazy.compactMap { event -> EngineInfo? in
@@ -164,7 +164,7 @@ final class EngineLocator: EngineLocating {
                 return .rejected
             }
             guard info.protocolVersion == engineProtocolVersion else {
-                Log.error("\(label): protocol \(info.protocolVersion), Booth speaks \(engineProtocolVersion)")
+                Log.error("\(label): protocol \(info.protocolVersion), OrcaAudioCleanup speaks \(engineProtocolVersion)")
                 return .rejected
             }
             return .valid(info)
@@ -188,12 +188,12 @@ final class EngineLocator: EngineLocating {
         }
         let executable = URL(fileURLWithPath: path)
         if let ownBundle, EngineSearch.isInside(executable.resolvingSymlinksInPath().path, directory: ownBundle.path) {
-            Log.info("engine candidate \(path) [\(source)]: Booth's own `booth` command, not an engine; skipped")
+            Log.info("engine candidate \(path) [\(source)]: OrcaAudioCleanup's own `booth` command, not an engine; skipped")
             return nil
         }
         if candidate.source == .managedInstall,
            !ManagedEngineInstaller.isCurrent(home: toolchain.home, source: bundledEngineSource) {
-            Log.info("engine candidate \(path) [\(source)]: doesn't match the engine bundled with Booth; setup will update it")
+            Log.info("engine candidate \(path) [\(source)]: doesn't match the engine bundled with OrcaAudioCleanup; setup will update it")
             installation = nil
             installationSource = nil
             managedInstallNeedsUpdate = true

@@ -110,21 +110,21 @@ _READ_ONLY_ERRNOS = (errno.EACCES, errno.EPERM, errno.EROFS)
 
 
 def _unreadable(name: str) -> str:
-    return f"{name} may be damaged or in a format Booth doesn't support. Nothing was changed."
+    return f"{name} may be damaged or in a format OrcaAudioCleanup doesn't support. Nothing was changed."
 
 
 def _not_allowed(name: str) -> str:
-    return (f"Booth isn't allowed to open {name}. Check the file's permissions, or allow Booth "
+    return (f"OrcaAudioCleanup isn't allowed to open {name}. Check the file's permissions, or allow OrcaAudioCleanup "
             "in System Settings › Privacy & Security › Files and Folders. Nothing was changed.")
 
 
 def _read_only(name: str) -> str:
-    return (f"Booth can't save next to {name} because that folder is read-only. "
+    return (f"OrcaAudioCleanup can't save next to {name} because that folder is read-only. "
             "Move the file somewhere you can write to, then try again.")
 
 
 def _replaces_input(name: str) -> JobError:
-    return JobError("engine_failed", f"The enhanced copy would replace {name} itself, so Booth "
+    return JobError("engine_failed", f"The enhanced copy would replace {name} itself, so OrcaAudioCleanup "
                                      "stopped. Nothing was changed.")
 
 
@@ -169,10 +169,10 @@ def _classify(e: Exception, stage: str | None, name: str) -> JobError:
             return JobError("engine_failed", _read_only(name), detail)
         reason = _last_line(e)
         if ".partial" in reason:            # temp-file names mean nothing to the user
-            return JobError("engine_failed", f"Booth couldn't save the enhanced copy of {name}.",
+            return JobError("engine_failed", f"OrcaAudioCleanup couldn't save the enhanced copy of {name}.",
                             detail)
         return JobError("engine_failed",
-                        f"Booth couldn't save the enhanced copy of {name}: {reason}", detail)
+                        f"OrcaAudioCleanup couldn't save the enhanced copy of {name}: {reason}", detail)
     if isinstance(e, (RuntimeError, OSError, subprocess.SubprocessError)):
         return JobError("engine_failed", f"Enhancing {name} failed: {_last_line(e)}", detail)
     return JobError("internal", f"{type(e).__name__}: {_first_line(e)}", detail)
@@ -210,7 +210,7 @@ def _enhance(stream: EventStream, args, make_settings: Callable, started: float)
         # exists() itself raises PermissionError when the OS blocks even a stat.
         if not path.exists():
             raise JobError("not_found",
-                           f"Booth couldn't find {name}. It may have been moved or deleted.")
+                           f"OrcaAudioCleanup couldn't find {name}. It may have been moved or deleted.")
         inp = path.resolve()
         open(inp, "rb").close()
     except PermissionError as e:
@@ -218,7 +218,7 @@ def _enhance(stream: EventStream, args, make_settings: Callable, started: float)
     except OSError as e:                    # a folder, an unreadable device, …
         raise JobError("decode_failed", _unreadable(name), str(e)) from None
     if tools.missing_ffmpeg_tools():     # setup downloads it
-        raise JobError("setup_required", "Booth needs ffmpeg to read audio.")
+        raise JobError("setup_required", "OrcaAudioCleanup needs ffmpeg to read audio.")
     no_sound = f"{name} has a video track but no sound. Nothing was changed."
     try:
         info = A.probe(inp)
@@ -239,7 +239,7 @@ def _enhance(stream: EventStream, args, make_settings: Callable, started: float)
     if keep_video and A.audio_codec_args(vid_out) is None:
         ext = vid_out.suffix.lstrip(".").upper()
         raise JobError("engine_failed",
-                       f"Booth can't write a {ext} video with this ffmpeg. Turn off Keep the "
+                       f"OrcaAudioCleanup can't write a {ext} video with this ffmpeg. Turn off Keep the "
                        f"original video, or install ffmpeg with {A.audio_codec_family(vid_out)} "
                        "support.")
     _check_writable(finals, name)

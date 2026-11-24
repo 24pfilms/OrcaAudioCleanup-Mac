@@ -7,9 +7,9 @@ import UserNotifications
 @MainActor
 final class UserNotifier: NSObject, Notifying {
     private enum Identifier {
-        static let category = "studio.booth.job-finished"
-        static let compare = "studio.booth.compare"
-        static let showInFinder = "studio.booth.show-in-finder"
+        static let category = "com.squarecirclelabs.orcaaudiocleanup.job-finished"
+        static let compare = "com.squarecirclelabs.orcaaudiocleanup.compare"
+        static let showInFinder = "com.squarecirclelabs.orcaaudiocleanup.show-in-finder"
         static let jobKey = "jobID"
     }
 
@@ -53,7 +53,7 @@ final class UserNotifier: NSObject, Notifying {
 
     func postJobFinished(_ job: Job) {
         let content = UNMutableNotificationContent()
-        content.title = "Booth"
+        content.title = "OrcaAudioCleanup"
         content.body = Formatting.notificationBody(name: job.name)
         content.categoryIdentifier = Identifier.category
         content.userInfo = [Identifier.jobKey: job.id.uuidString]
