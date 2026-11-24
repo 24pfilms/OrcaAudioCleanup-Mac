@@ -9,7 +9,7 @@ It lives in the menu bar: drop a recording on it and `<name>-enhanced` appears b
 with the voice restored, the background turned down, and the picture left as it was. Everything runs
 on your Mac. There is no account, no upload and no length limit. Your original file is never changed.
 
-There is also a Windows version: see [squarecirclelabs.com](https://squarecirclelabs.com).
+There is also a Windows version: [OrcaAudioClean](https://github.com/24pfilms/OrcaAudioClean).
 
 OrcaAudioCleanup for Mac is [Booth](https://github.com/shrimbly/booth) by shrimbly (MIT licence),
 renamed. All the credit for the app and its engine goes to Booth.
